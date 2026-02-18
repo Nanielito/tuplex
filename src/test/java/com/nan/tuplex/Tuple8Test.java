@@ -231,10 +231,10 @@ class Tuple8Test extends TupleBaseTest implements
                 "%sbar"::formatted,
                 third -> !third,
                 fourth -> fourth + 0.86,
-                _ -> 'd',
+                fifth -> 'd',
                 sixth -> sixth / 2,
                 seventh -> seventh - 1.0f,
-                _ -> 0x64);
+                eighth -> 0x64);
 
         assertEquals(84, tuple._1());
         assertEquals("foobar", tuple._2());
@@ -304,7 +304,7 @@ class Tuple8Test extends TupleBaseTest implements
 
     @Test
     void shouldMapFifthValue() {
-        Tuple8<Integer, String, Boolean, Double, Character, Long, Float, Integer> tuple = createTuple().map5(_ -> 'd');
+        Tuple8<Integer, String, Boolean, Double, Character, Long, Float, Integer> tuple = createTuple().map5(value -> 'd');
 
         assertEquals(42, tuple._1());
         assertEquals("foo", tuple._2());
@@ -346,7 +346,7 @@ class Tuple8Test extends TupleBaseTest implements
 
     @Test
     void shouldMapEighthValue() {
-        Tuple8<Integer, String, Boolean, Double, Character, Long, Float, Integer> tuple = createTuple().map8(_ -> 0x64);
+        Tuple8<Integer, String, Boolean, Double, Character, Long, Float, Integer> tuple = createTuple().map8(value -> 0x64);
 
         assertEquals(42, tuple._1());
         assertEquals("foo", tuple._2());
