@@ -15,6 +15,7 @@ on:
 
 permissions:
   contents: write
+  packages: write
 
 jobs:
   release:
@@ -73,6 +74,11 @@ jobs:
           git commit -m "chore: bump version to ${{ steps.bump.outputs.newVersion }}"
           git tag "v${{ steps.bump.outputs.newVersion }}"
           git push --follow-tags
+          
+      - name: Publish to GitHub Packages
+        run: ./gradlew publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
