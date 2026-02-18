@@ -17,7 +17,7 @@ It provides immutable tuple types (`Tuple1` … `Tuple8`, plus `TupleN`) and a c
 
 ## Requirements
 
-- **Java 25+** (the project is configured with Java in Gradle)
+- **Java 21+** (the project is configured with Java in Gradle)
 
 ## Installation
 
