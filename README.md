@@ -1,4 +1,4 @@
-# Tuples
+# Tuplex
 
 A small, dependency-free tuples library for Java.
 
