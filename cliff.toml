@@ -2,7 +2,6 @@
 header = """
 # Changelog
 
-Todos los cambios relevantes serán documentados aquí.
 """
 
 body = """
