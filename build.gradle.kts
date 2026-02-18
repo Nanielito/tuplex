@@ -5,7 +5,7 @@ plugins {
     id("signing")
 }
 
-group = "com.nan.tuplex"
+group = "com.nan"
 version = project.property("version") as String
 
 java {
@@ -59,6 +59,17 @@ publishing {
                     developerConnection.set("scm:git:ssh://github.com/nanielito/tuplex.git")
                     url.set("https://github.com/nanielito/tuplex")
                 }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/nanielito/tuplex")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }
