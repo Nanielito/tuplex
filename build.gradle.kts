@@ -1,9 +1,20 @@
 plugins {
     id("java")
+    id("java-library")
+    id("maven-publish")
+    id("signing")
 }
 
 group = "com.nan.tuplex"
-version = "0.1.0-SNAPSHOT"
+version = project.property("version") as String
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(25))
+    }
+    withSourcesJar()
+    withJavadocJar()
+}
 
 repositories {
     mavenCentral()
@@ -17,4 +28,38 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+
+            pom {
+                name.set("Tuplex")
+                description.set("A small, dependency-free tuples library for Java")
+                url.set("https://github.com/nanielito/tuplex")
+
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+
+                developers {
+                    developer {
+                        id.set("nanielito")
+                        name.set("Daniel Ramirez")
+                    }
+                }
+
+                scm {
+                    connection.set("scm:git:git://github.com/nanielito/tuplex.git")
+                    developerConnection.set("scm:git:ssh://github.com/nanielito/tuplex.git")
+                    url.set("https://github.com/nanielito/tuplex")
+                }
+            }
+        }
+    }
 }
