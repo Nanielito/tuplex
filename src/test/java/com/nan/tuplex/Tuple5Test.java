@@ -154,7 +154,7 @@ class Tuple5Test extends TupleBaseTest implements
                 "%sbar"::formatted,
                 third -> !third,
                 fourth -> fourth + 0.86,
-                _ -> 'd');
+                fifth -> 'd');
 
         assertEquals(84, tuple._1());
         assertEquals("foobar", tuple._2());
@@ -209,7 +209,7 @@ class Tuple5Test extends TupleBaseTest implements
 
     @Test
     void shouldMapFifthValue() {
-        Tuple5<Integer, String, Boolean, Double, Character> tuple = createTuple().map5(_ -> 'd');
+        Tuple5<Integer, String, Boolean, Double, Character> tuple = createTuple().map5(value -> 'd');
 
         assertEquals(42, tuple._1());
         assertEquals("foo", tuple._2());
