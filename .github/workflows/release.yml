@@ -32,6 +32,23 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
 
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - name: Validate GitHub Packages token
+        run: |
+          if [ -z "$GITHUB_PACKAGES_TOKEN" ]; then
+            echo "GH_PACKAGES_TOKEN secret is required to publish to nanielito/maven-packages."
+            echo "Create a classic PAT with write:packages access and store it as a repository secret."
+            exit 1
+          fi
+        env:
+          GITHUB_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+
       - name: Install git-cliff
         uses: taiki-e/install-action@v2
         with:
@@ -77,8 +94,9 @@ jobs:
           git push --follow-tags
           
       - name: Publish to GitHub Packages
-        run: ./gradlew publish
+        run: ./gradlew publish -PbuildJavaVersion=21
         env:
+          GITHUB_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create GitHub Release
