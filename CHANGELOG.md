@@ -1,6 +1,15 @@
 # Changelog
 
 
+## v1.0.0 - 2026-07-05
+
+
+
+### <!-- 10 -->💼 Other
+
+- Publish to maven packages (247e2fd)
+
+
 ## v0.1.1 - 2026-02-19
 
 
@@ -22,6 +31,8 @@
 - Updates ci workflow for Java 21 and 25 (f5d5dcc)
 
 - Improves build process (f66baed)
+
+- Bump version to 0.1.1 (146202d)
 
 
 ## v0.1.0 - 2026-02-18
