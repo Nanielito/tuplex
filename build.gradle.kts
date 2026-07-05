@@ -1,3 +1,6 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 plugins {
     id("java")
     id("java-library")
@@ -7,10 +10,17 @@ plugins {
 
 group = "com.nan"
 version = project.property("version") as String
+val buildJavaVersion = providers.gradleProperty("buildJavaVersion")
+    .map(String::toInt)
+    .orElse(25)
+val githubPackagesUrl = "https://maven.pkg.github.com/nanielito/maven-packages"
+
+fun environmentVariableOrNull(name: String): String? =
+    providers.environmentVariable(name).orNull?.takeIf(String::isNotBlank)
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(25))
+        languageVersion.set(JavaLanguageVersion.of(buildJavaVersion.get()))
     }
     withSourcesJar()
     withJavadocJar()
@@ -18,6 +28,12 @@ java {
 
 tasks.withType<JavaCompile>().configureEach {
     options.release.set(21)
+}
+
+tasks.named<Jar>("jar") {
+    outputs.upToDateWhen {
+        archiveFile.get().asFile.exists()
+    }
 }
 
 repositories {
@@ -32,6 +48,23 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+
+    testLogging {
+        events = setOf(
+            TestLogEvent.PASSED,
+            TestLogEvent.SKIPPED,
+            TestLogEvent.FAILED
+        )
+        exceptionFormat = TestExceptionFormat.FULL
+        showCauses = true
+        showExceptions = true
+        showStackTraces = true
+    }
+
+    reports {
+        html.required.set(true)
+        junitXml.required.set(true)
+    }
 }
 
 publishing {
@@ -63,6 +96,14 @@ publishing {
                     developerConnection.set("scm:git:ssh://github.com/nanielito/tuplex.git")
                     url.set("https://github.com/nanielito/tuplex")
                 }
+
+                withXml {
+                    val distributionManagement = asNode().appendNode("distributionManagement")
+                    val repository = distributionManagement.appendNode("repository")
+                    repository.appendNode("id", "GitHubPackages")
+                    repository.appendNode("name", "GitHub nanielito Apache Maven Packages")
+                    repository.appendNode("url", githubPackagesUrl)
+                }
             }
         }
     }
@@ -70,10 +111,12 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/nanielito/tuplex")
+            url = uri(githubPackagesUrl)
             credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+                username = environmentVariableOrNull("GITHUB_PACKAGES_USER")
+                    ?: environmentVariableOrNull("GITHUB_ACTOR")
+                password = environmentVariableOrNull("GITHUB_PACKAGES_TOKEN")
+                    ?: environmentVariableOrNull("GITHUB_TOKEN")
             }
         }
     }
