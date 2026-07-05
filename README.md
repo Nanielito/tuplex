@@ -21,7 +21,23 @@ It provides immutable tuple types (`Tuple1` … `Tuple8`, plus `TupleN`) and a c
 
 ## Installation
 
-This project is currently set up as a Gradle build.
+Artifacts are published to GitHub Packages under the centralized `maven-packages` repository.
+
+```kotlin
+repositories {
+    maven {
+        url = uri("https://maven.pkg.github.com/nanielito/maven-packages")
+        credentials {
+            username = System.getenv("GITHUB_ACTOR")
+            password = System.getenv("GITHUB_TOKEN")
+        }
+    }
+}
+
+dependencies {
+    implementation("com.nan:tuplex:1.0.0")
+}
+```
 
 For local development/testing, clone the repo and run tests (see below).
 
