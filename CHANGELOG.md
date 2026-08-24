@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v1.0.0 - 2026-08-24
+
+
+
+### <!-- 10 -->💼 Other
+
+- Publish to maven packages (247e2fd)
+
+- Publish releases to Maven Central (5cb9f64)
+
+
+### <!-- 3 -->📚 Documentation
+
+- Add contributor guide (3ce0d1c)
+
+
+### <!-- 7 -->⚙️ Miscellaneous Tasks
+
+- Harden release workflow (cb0e6da)
+
+- Update actions for Node.js 24 (e33a682)
+
+- Updates release workflow (907e30f)
+
+
 ## v0.1.1 - 2026-02-19
 
 
@@ -22,6 +47,8 @@
 - Updates ci workflow for Java 21 and 25 (f5d5dcc)
 
 - Improves build process (f66baed)
+
+- Bump version to 0.1.1 (146202d)
 
 
 ## v0.1.0 - 2026-02-18
