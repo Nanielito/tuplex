@@ -51,11 +51,11 @@ class Example {
     Tuple t1 = Tuples.of("hello");              // Tuple1
     Tuple t2 = Tuples.of("left", 42);           // Tuple2
     Tuple t3 = Tuples.of("a", "b", "c");        // Tuple3
-    Tuple tn = Tuples.of(1, 2, 3, 4, 5, 6, 7);  // TupleN (varargs overload also exists)
+    Tuple tn = Tuples.of(1, 2, 3, 4, 5, 6, 7, 8, 9); // TupleN
 
     System.out.println(t2.size());     // 2
     System.out.println(t2.get(1));     // "left" (index is 1-based)
-    System.out.println(t2.left());     // "left
+    System.out.println(t2.left());     // "left"
     System.out.println(t2.get(2));     // 42
     System.out.println(t2.right());    // 42
   }
