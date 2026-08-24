@@ -21,23 +21,19 @@ It provides immutable tuple types (`Tuple1` … `Tuple8`, plus `TupleN`) and a c
 
 ## Installation
 
-Artifacts are published to GitHub Packages under the centralized `maven-packages` repository.
+Artifacts are published to Maven Central and mirrored to GitHub Packages.
 
 ```kotlin
 repositories {
-    maven {
-        url = uri("https://maven.pkg.github.com/nanielito/maven-packages")
-        credentials {
-            username = System.getenv("GITHUB_ACTOR")
-            password = System.getenv("GITHUB_TOKEN")
-        }
-    }
+    mavenCentral()
 }
 
 dependencies {
-    implementation("com.nan:tuplex:1.0.0")
+    implementation("io.github.nanielito:tuplex:1.0.0")
 }
 ```
+
+The same coordinates are available from the `nanielito/maven-packages` GitHub Packages registry for authenticated GitHub users.
 
 For local development/testing, clone the repo and run tests (see below).
 

@@ -8,7 +8,7 @@ plugins {
     id("signing")
 }
 
-group = "com.nan"
+group = "io.github.nanielito"
 version = project.property("version") as String
 val buildJavaVersion = providers.gradleProperty("buildJavaVersion")
     .map(String::toInt)
@@ -110,5 +110,13 @@ publishing {
                     ?: environmentVariableOrNull("GITHUB_TOKEN")
             }
         }
+    }
+}
+
+signing {
+    val key = environmentVariableOrNull("SIGNING_KEY")
+    if (key != null) {
+        useInMemoryPgpKeys(key, environmentVariableOrNull("SIGNING_PASSWORD"))
+        sign(publishing.publications["mavenJava"])
     }
 }
